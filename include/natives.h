@@ -1,5 +1,7 @@
 #pragma once
 
+// version 1.0.4.0
+
 typedef  int(__cdecl* _GET_PLAYER_ID)(void);
 typedef  int(__cdecl* _CONVERT_INT_TO_PLAYERINDEX)(int);
 typedef  void(__cdecl* _GET_CHAR_COORDINATES)(int charId, float* x, float* y, float* z);
