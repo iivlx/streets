@@ -32,6 +32,21 @@ void showStreetNames() {
   return;
 }
 
+bool handleKeyPresses() {
+  if (GetAsyncKeyState(VK_END) & 1) {
+    OutputDebugString(_T("Received END key"));
+    return false;
+  }
+  else if (GetAsyncKeyState(VK_HOME) & 1) {
+    OutputDebugString(_T("Received HOME key"));
+    showStreetNames();
+  }
+  else if (GetAsyncKeyState(VK_PRIOR) & 1) {
+    OutputDebugString(_T("Received PAGEUP key"));
+    ;
+  }
+  return true;
+}
 
 DWORD WINAPI mod(HMODULE hModule) {
   BOOL createConsole;
@@ -39,23 +54,12 @@ DWORD WINAPI mod(HMODULE hModule) {
   uintptr_t moduleBase = (uintptr_t)GetModuleHandleW(L"GTAIV.exe");
   registerFunctions(moduleBase);
   
-  while (TRUE) {
-    if (GetAsyncKeyState(VK_END) & 1) {
-      OutputDebugString(_T("Received END key"));
-      break;
-    }
-    else if (GetAsyncKeyState(VK_HOME) & 1) {
-      OutputDebugString(_T("Received HOME key"));
-      showStreetNames();
-    }
-    else if (GetAsyncKeyState(VK_PRIOR) & 1) {
-      OutputDebugString(_T("Received PAGEUP key"));
-      ;
-    }
-    
+  bool mod_running = true;
+
+  while (mod_running) {
+    mod_running = handleKeyPresses();
     Sleep(10);
   }
-
 
   OutputDebugString(_T("[-] Unloaded ASI"));
   FreeLibraryAndExitThread(hModule, 0);
