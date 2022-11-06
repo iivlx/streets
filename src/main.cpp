@@ -14,9 +14,6 @@ void DllProccessAttach(HMODULE hModule) {
 
 BOOL APIENTRY DllMain(HMODULE hModule, DWORD nReason, LPVOID lpReserved) {
   HANDLE hThread;
-  TCHAR pszMessage[1024] = { 0 };
-  
-  _stprintf_s(pszMessage, _T("hModule 0x%p, nReason %d\r\n"), hModule, nReason);
   
   switch (nReason) {
 	  case DLL_PROCESS_ATTACH:
