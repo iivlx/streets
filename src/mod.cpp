@@ -6,6 +6,9 @@
 #include "natives.h"
 #include "colors.h"
 
+#include "directx.h"
+#include "interface.h"
+
 vec3 getPlayerPositionFromId(int playerId) {
   float x, y, z;
   int* playerChar = nullptr;
@@ -21,6 +24,7 @@ void displayStreetNames(char* street1, char* street2) {
   OutputDebugString(buffer);
 }
 
+
 void showStreetNames() {
   int street1, street2;
   
@@ -28,7 +32,9 @@ void showStreetNames() {
   
   FIND_STREET_NAME_AT_POSITION(playerPosition.x, playerPosition.y, playerPosition.z, &street1, &street2);
   displayStreetNames(GET_STRING_FROM_HASH_KEY(street1), GET_STRING_FROM_HASH_KEY(street2));
-  
+
+  GIVE_PLAYER_HELMET(CONVERT_INT_TO_PLAYERINDEX(GET_PLAYER_ID()));
+
   return;
 }
 
@@ -43,7 +49,11 @@ bool handleKeyPresses() {
   }
   else if (GetAsyncKeyState(VK_PRIOR) & 1) {
     OutputDebugString(_T("Received PAGEUP key"));
-    ;
+    PAUSE_GAME();
+  }
+  else if (GetAsyncKeyState(VK_NEXT) & 1) {
+    OutputDebugString(_T("Received PAGEDOWN key"));
+    UNPAUSE_GAME();
   }
   return true;
 }
@@ -53,6 +63,8 @@ DWORD WINAPI mod(HMODULE hModule) {
   FILE* f = nullptr;
   uintptr_t moduleBase = (uintptr_t)GetModuleHandleW(L"GTAIV.exe");
   registerFunctions(moduleBase);
+
+  hookEndScene();
   
   bool mod_running = true;
 

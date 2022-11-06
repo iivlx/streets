@@ -8,4 +8,5 @@ add_library(${PROJECT_NAME} SHARED)
 set_target_properties(${PROJECT_NAME} PROPERTIES SUFFIX ".asi")
 
 add_subdirectory(include)
+add_subdirectory(lib)
 add_subdirectory(src)
