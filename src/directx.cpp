@@ -10,6 +10,8 @@
 
 endScene pEndScene;
 
+extern Interface* iface;
+
 void hookEndScene() {
 
   OutputDebugString("[+] Hooking DX9");
@@ -50,6 +52,6 @@ void hookEndScene() {
 }
 
 HRESULT __stdcall hookedEndScene(IDirect3DDevice9* pDevice) {
-  display(pDevice);
+  iface->display(pDevice);
   return pEndScene(pDevice);
 }

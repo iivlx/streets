@@ -8,6 +8,9 @@
 
 #include "directx.h"
 #include "interface.h"
+#include "mod.h"
+
+extern Interface* iface;
 
 vec3 getPlayerPositionFromId(int playerId) {
   float x, y, z;
@@ -23,7 +26,6 @@ void displayStreetNames(char* street1, char* street2) {
   sprintf(buffer, _T("GET_STRING_FROM_HASH_KEY() : street1 = %s, street2 = %s"), street1, street2);
   OutputDebugString(buffer);
 }
-
 
 void showStreetNames() {
   int street1, street2;
@@ -45,14 +47,17 @@ bool handleKeyPresses() {
   }
   else if (GetAsyncKeyState(VK_HOME) & 1) {
     OutputDebugString(_T("Received HOME key"));
+    iface->lastkey = "HOME";
     showStreetNames();
   }
   else if (GetAsyncKeyState(VK_PRIOR) & 1) {
     OutputDebugString(_T("Received PAGEUP key"));
+    iface->lastkey = "PAGEUP";
     PAUSE_GAME();
   }
   else if (GetAsyncKeyState(VK_NEXT) & 1) {
     OutputDebugString(_T("Received PAGEDOWN key"));
+    iface->lastkey = "PAGEDOWN";
     UNPAUSE_GAME();
   }
   return true;

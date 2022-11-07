@@ -2,7 +2,10 @@
 #include <Windows.h>
 #include <tchar.h>
 
+#include "interface.h"
 #include "mod.h"
+
+Interface* iface = new Interface();
 
 void DllProccessAttach(HMODULE hModule) {
   HANDLE hThread;
