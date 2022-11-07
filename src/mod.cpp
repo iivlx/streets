@@ -37,19 +37,19 @@ void updateStreetNames() {
 
 bool handleKeyPresses() {
   if (GetAsyncKeyState(VK_END) & 1) {
-    OutputDebugString(_T("Received END key"));
+    if (DEBUG) OutputDebugString(_T("Received END key"));
     return false;
   }
   else if (GetAsyncKeyState(VK_HOME) & 1) {
-    OutputDebugString(_T("Received HOME key"));
+    if (DEBUG) OutputDebugString(_T("Received HOME key"));
     updateStreetNames();
   }
   else if (GetAsyncKeyState(VK_PRIOR) & 1) {
-    OutputDebugString(_T("Received PAGEUP key"));
+    if (DEBUG) OutputDebugString(_T("Received PAGEUP key"));
     PAUSE_GAME();
   }
   else if (GetAsyncKeyState(VK_NEXT) & 1) {
-    OutputDebugString(_T("Received PAGEDOWN key"));
+    if (DEBUG) OutputDebugString(_T("Received PAGEDOWN key"));
     UNPAUSE_GAME();
   }
   return true;
@@ -70,6 +70,6 @@ DWORD WINAPI mod(HMODULE hModule) {
     Sleep(10);
   }
 
-  OutputDebugString(_T("[-] Unloaded ASI"));
+  if (DEBUG) OutputDebugString(_T("[-] Unloaded ASI"));
   FreeLibraryAndExitThread(hModule, 0);
 }
