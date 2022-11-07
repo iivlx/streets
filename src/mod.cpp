@@ -21,19 +21,14 @@ vec3 getPlayerPositionFromId(int playerId) {
   return { x, y, z };
 }
 
-void displayStreetNames(char* street1, char* street2) {
-  char buffer[256];
-  sprintf(buffer, _T("GET_STRING_FROM_HASH_KEY() : street1 = %s, street2 = %s"), street1, street2);
-  OutputDebugString(buffer);
-}
-
-void showStreetNames() {
+void updateStreetNames() {
   int street1, street2;
-  
+ 
   vec3 playerPosition = getPlayerPositionFromId(GET_PLAYER_ID());
   
   FIND_STREET_NAME_AT_POSITION(playerPosition.x, playerPosition.y, playerPosition.z, &street1, &street2);
-  displayStreetNames(GET_STRING_FROM_HASH_KEY(street1), GET_STRING_FROM_HASH_KEY(street2));
+  iface->street1 = GET_STRING_FROM_HASH_KEY(street1);
+  iface->street2 = GET_STRING_FROM_HASH_KEY(street2);
 
   GIVE_PLAYER_HELMET(CONVERT_INT_TO_PLAYERINDEX(GET_PLAYER_ID()));
 
@@ -47,17 +42,14 @@ bool handleKeyPresses() {
   }
   else if (GetAsyncKeyState(VK_HOME) & 1) {
     OutputDebugString(_T("Received HOME key"));
-    iface->lastkey = "HOME";
-    showStreetNames();
+    updateStreetNames();
   }
   else if (GetAsyncKeyState(VK_PRIOR) & 1) {
     OutputDebugString(_T("Received PAGEUP key"));
-    iface->lastkey = "PAGEUP";
     PAUSE_GAME();
   }
   else if (GetAsyncKeyState(VK_NEXT) & 1) {
     OutputDebugString(_T("Received PAGEDOWN key"));
-    iface->lastkey = "PAGEDOWN";
     UNPAUSE_GAME();
   }
   return true;

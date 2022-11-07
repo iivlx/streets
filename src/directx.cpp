@@ -7,6 +7,7 @@
 
 #include "directx.h"
 #include "interface.h"
+#include "mod.h"
 
 endScene pEndScene;
 

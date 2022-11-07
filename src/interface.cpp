@@ -10,7 +10,7 @@ LPD3DXFONT font;
 Interface::Interface() : font(nullptr) {}
 
 void Interface::drawBackground(IDirect3DDevice9* pDevice) {
-  D3DRECT r = { 50, 50, 200, 200 };
+  D3DRECT r = { this->x, this->y, this->x+this->width, this->y+this->height };
   pDevice->Clear(1, &r , D3DCLEAR_TARGET, D3DCOLOR_ARGB(100, 50, 50, 50), 0.0f, 0);
 }
 
@@ -19,8 +19,16 @@ void Interface::drawText(IDirect3DDevice9* pDevice) {
     this->loadFont(pDevice);
 
   RECT r;
-  SetRect(&r, 80 , 80 , 100, 100);
-  font->DrawText(NULL, this->lastkey.c_str(), -1, &r, DT_NOCLIP | DT_LEFT, D3DCOLOR_ARGB(255, 153, 255, 153));
+  SetRect(&r, this->x, this->y, this->x + this->width, this->y + this->height);
+  font->DrawText(NULL, "Location: ", -1, &r, DT_NOCLIP | DT_LEFT, D3DCOLOR_ARGB(255, 153, 255, 153));
+
+  SetRect(&r, this->x, this->y + 20, this->x + this->width, this->y + this->height);
+  std::string location = this->street1 + " " + this->street2 + ", " + this->zone;
+
+  font->DrawText(NULL, location.c_str() , -1, &r, DT_NOCLIP | DT_LEFT, D3DCOLOR_ARGB(255, 153, 255, 153));
+
+  SetRect(&r, this->x, this->y + 100 , this->x + this->width, this->y + this->height);
+  font->DrawText(NULL, "Current Targets: ", -1, &r, DT_NOCLIP | DT_LEFT, D3DCOLOR_ARGB(255, 153, 255, 153));
 }
 
 void Interface::display(IDirect3DDevice9* pDevice) {
