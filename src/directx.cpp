@@ -15,7 +15,7 @@ extern Interface* iface;
 
 void hookEndScene() {
 
-  OutputDebugString("[+] Hooking DX9");
+  if (DEBUG) OutputDebugString("[+] Hooking DX9");
 
   IDirect3D9* pD3D = Direct3DCreate9(D3D_SDK_VERSION);
   if (!pD3D) return;
@@ -29,14 +29,13 @@ void hookEndScene() {
   HRESULT result = pD3D->CreateDevice(D3DADAPTER_DEFAULT, D3DDEVTYPE_HAL, d3dparams.hDeviceWindow, D3DCREATE_SOFTWARE_VERTEXPROCESSING, &d3dparams, &pDevice);
 
   if (FAILED(result) || !pDevice) {
-    OutputDebugString("[-] Create Device Failed");
-    OutputDebugString("[-] Hook failed");
+    if (DEBUG) OutputDebugString("[-] Create Device Failed");
+    if (DEBUG) OutputDebugString("[-] Hook failed");
     pD3D->Release();
     return;
   }
-  else {
-    OutputDebugString("[+] Create Device Success");
-  }
+
+  if (DEBUG) OutputDebugString("[+] Create Device Success");
 
   DWORD* vTable = *reinterpret_cast<DWORD**>(pDevice);
   pEndScene = (endScene)(DWORD)vTable[42];
@@ -46,8 +45,8 @@ void hookEndScene() {
   DetourAttach(&(PVOID&)pEndScene, (PBYTE)hookedEndScene);
   DetourTransactionCommit();
 
-  OutputDebugString("[+] Attached Detour");
-  OutputDebugString("[+] Hook successful");
+  if (DEBUG) OutputDebugString("[+] Attached Detour");
+  if (DEBUG) OutputDebugString("[+] Hook successful");
   pDevice->Release();
   pD3D->Release();
 }
