@@ -29,6 +29,5 @@ void Interface::display(IDirect3DDevice9* pDevice) {
 }
 
 void Interface::loadFont(IDirect3DDevice9* pDevice){
-  if (!this->font)
-    D3DXCreateFont(pDevice, 16, 0, FW_BOLD, 1, 0, DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, DEFAULT_QUALITY, DEFAULT_PITCH | FF_DONTCARE, "Arial", &this->font);
+  D3DXCreateFont(pDevice, 16, 0, FW_BOLD, 1, 0, DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, DEFAULT_QUALITY, DEFAULT_PITCH | FF_DONTCARE, "Arial", &this->font);
 }
