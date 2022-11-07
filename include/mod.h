@@ -2,6 +2,8 @@
 
 #include <Windows.h>
 
+#include "vec.h"
+
 const bool DEBUG = true;
 
 DWORD WINAPI mod(HMODULE hModule);
