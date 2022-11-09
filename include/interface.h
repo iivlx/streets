@@ -16,12 +16,18 @@ public:
   int y = 200;
   int width = 400;
   int height = 600;
+  int text_x = 0;
+  int text_y = 0;
 
   Interface();
   void display(IDirect3DDevice9* pDevice);
-  void drawBackground(IDirect3DDevice9* pDevice);
-  void drawText(IDirect3DDevice9* pDevice);
-  void loadFont(IDirect3DDevice9* pDevice);
+  void displayText();
+  void drawBackground();
+  void drawText(std::string text);
+  void loadFont();
+  void textNextLine();
+
 private:
   LPD3DXFONT font;
+  IDirect3DDevice9* device;
 };
