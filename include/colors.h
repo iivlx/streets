@@ -1,8 +1,9 @@
 #pragma once
 
-#define DEFAULT_COLOR_TEXT D3DCOLOR_RGBA(255, 255, 255, 255)
-#define WHITE D3DCOLOR_RGBA(255, 255, 255, 255)
-#define GREEN D3DCOLOR_RGBA(153, 255, 153, 255)
+#define DEFAULT_COLOR_TEXT(alpha) D3DCOLOR_ARGB(alpha, 255, 255, 255)
+#define WHITE(alpha)              D3DCOLOR_ARGB(alpha, 255, 255, 255)
+#define GREEN(alpha)              D3DCOLOR_ARGB(alpha, 153, 255, 153)
+#define LIGHT_GREY(alpha)         D3DCOLOR_ARGB(alpha, 50, 50, 50)
 
 enum GC_COLORS {
   GC_BLACK,

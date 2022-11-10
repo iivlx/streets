@@ -11,6 +11,55 @@
 
 extern Interface* iface;
 
+void DX::drawRect(IDirect3DDevice9* pDevice, int x, int y, int w, int h, D3DCOLOR color) {
+  D3DXVECTOR2 p[] = { D3DXVECTOR2(x, y), D3DXVECTOR2(x + w, y + h) };
+  vertex v[4];
+  
+  v[0].color = v[1].color = v[2].color = v[3].color = color;
+
+  v[0].z = v[1].z = v[2].z = v[3].z = 0;
+  v[0].rhw = v[1].rhw = v[2].rhw = v[3].rhw = 0;
+  
+  v[0].x = x;
+  v[0].y = y;
+  v[1].x = x + w;
+  v[1].y = y;
+  v[2].x = x + w;
+  v[2].y = y + h;
+  v[3].x = x;
+  v[3].y = y + h;
+
+  unsigned short indices[] = {0, 1, 3, 1, 2, 3};
+
+  pDevice->CreateVertexBuffer(4*sizeof(vertex), D3DUSAGE_WRITEONLY, D3DFVF_XYZRHW|D3DFVF_DIFFUSE, D3DPOOL_DEFAULT, &DX::pVB, NULL);
+  pDevice->CreateIndexBuffer(2*sizeof(short), D3DUSAGE_WRITEONLY, D3DFMT_INDEX16, D3DPOOL_DEFAULT, &DX::pIB, NULL);
+ 
+  VOID* pVertices;
+  DX::pVB->Lock(0, sizeof(v), (void**)&pVertices, 0);
+  memcpy(pVertices, v, sizeof(v));
+  DX::pVB->Unlock();
+ 
+  VOID* pIndex;
+  DX::pIB->Lock(0, sizeof(indices), (void**)&pIndex, 0);
+  memcpy(pIndex, indices, sizeof(indices));
+  DX::pIB->Unlock();
+ 
+  pDevice->SetTexture(0, NULL);
+  pDevice->SetPixelShader(NULL);
+  pDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);
+  pDevice->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
+  pDevice->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);
+ 
+  pDevice->SetStreamSource(0, pVB, 0, sizeof(vertex));
+  pDevice->SetFVF(D3DFVF_XYZRHW|D3DFVF_DIFFUSE);
+  pDevice->SetIndices(pIB);
+ 
+  pDevice->DrawIndexedPrimitive(D3DPT_TRIANGLELIST, 0, 0, 4, 0, 2);
+ 
+  DX::pVB->Release();
+  DX::pIB->Release();
+}
+
 void DX::hookEndScene() {
 
   if (DEBUG) OutputDebugString("[+] Hooking DX9");

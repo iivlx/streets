@@ -30,9 +30,10 @@ Once this is completed, **streets** executes its mainloop and using the scriptin
 ### TODO:
 
 - [x] Get street name information from coordinates
+- [ ] Get neighbourhood from coordinates
 - [x] Display overlay
 - [ ] Get information of first blip
 - [ ] Iterate through blips
 - [ ] Display blip info for each blip
 - [ ] Cleanup overlay
-- [ ] Overlay opacity
+- [x] Overlay opacity
