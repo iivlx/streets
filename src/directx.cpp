@@ -60,6 +60,12 @@ void DX::drawRect(IDirect3DDevice9* pDevice, int x, int y, int w, int h, D3DCOLO
   DX::pIB->Release();
 }
 
+void DX::drawText(IDirect3DDevice9* pDevice, int x, int y, std::string text, D3DCOLOR color) {
+  RECT r;
+  SetRect(&r, x, y, TEXT_WIDTH, TEXT_HEIGHT);
+  DX::font->DrawText(NULL, text.c_str(), -1, &r, DT_NOCLIP | DT_LEFT, color);
+}
+
 void DX::hookEndScene() {
 
   if (DEBUG) OutputDebugString("[+] Hooking DX9");
@@ -101,4 +107,8 @@ void DX::hookEndScene() {
 HRESULT __stdcall DX::hookedEndScene(IDirect3DDevice9* pDevice) {
   iface->display(pDevice);
   return DX::pEndScene(pDevice);
+}
+
+void DX::loadFont(IDirect3DDevice9* pDevice){
+  D3DXCreateFont(pDevice, 16, 0, FW_BOLD, 1, 0, DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, DEFAULT_QUALITY, DEFAULT_PITCH | FF_DONTCARE, "Arial", &DX::font);
 }

@@ -13,7 +13,7 @@ public:
   std::string street2 = "street2";
   std::string zone = "ZONE";
   
-  IDirect3DDevice9* device;
+  IDirect3DDevice9* pDevice;
 
   int x = 1600;
   int y = 20;
@@ -26,15 +26,14 @@ public:
   Interface();
   void display(IDirect3DDevice9* pDevice);
   void displayBackground();
-  void displayText();
-  void drawRect(int x, int y, int w, int h, D3DCOLOR color);
+  void displayInfo();
+  void displayText(std::string text);
+  void displayText(std::string text, D3DCOLOR color);
   void drawNewLine();
-  void drawText(std::string text);
-  void drawText(std::string text, D3DCOLOR color);
-  void loadFont();
+  void drawRect(int x, int y, int w, int h, D3DCOLOR color);
+  void setTextPosition();
 
 private:
-  LPD3DXFONT font;
   int backGroundOpacity = 120;
   D3DCOLOR backgroundColor = LIGHT_GREY(backGroundOpacity);
 };
