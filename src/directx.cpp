@@ -11,6 +11,8 @@
 
 extern Interface* iface;
 
+LPD3DXFONT DX::font = nullptr;
+
 void DX::drawRect(IDirect3DDevice9* pDevice, int x, int y, int w, int h, D3DCOLOR color) {
   D3DXVECTOR2 p[] = { D3DXVECTOR2(x, y), D3DXVECTOR2(x + w, y + h) };
   vertex v[4];

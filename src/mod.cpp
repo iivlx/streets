@@ -19,7 +19,7 @@ void addBlip() {
   float z = playerPosition.z;
 
   int* pBlip = nullptr;
-  ADD_BLIP_FOR_COORD(x, y, z, &pBlip); // sponge: crashes...
+  ADD_BLIP_FOR_COORD(x, y, z, &pBlip); // FIXME: crashes...
 }
 
 vec3 getPlayerPositionFromId(int playerId) {
@@ -54,7 +54,7 @@ bool handleKeyPresses() {
 DWORD WINAPI mod(HMODULE hModule) {
   registerFunctions((uintptr_t)GetModuleHandleW(L"GTAIV.exe"));
   DX::hookEndScene();
-  
+
   bool mod_running = true;
 
   while (mod_running) {
@@ -76,6 +76,4 @@ void updateStreetNames() {
   iface->street2 = GET_STRING_FROM_HASH_KEY(street2);
 
   GIVE_PLAYER_HELMET(CONVERT_INT_TO_PLAYERINDEX(GET_PLAYER_ID()));
-
-  return;
 }

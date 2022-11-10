@@ -7,6 +7,6 @@ struct vec3 {
 };
 
 struct vertex {
-    FLOAT x, y, z, rhw;
-    D3DCOLOR color;
+  FLOAT x, y, z, rhw;
+  D3DCOLOR color;
 };
