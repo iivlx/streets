@@ -12,6 +12,16 @@
 
 extern Interface* iface;
 
+void addBlip() {
+  vec3 playerPosition = getPlayerPositionFromId(GET_PLAYER_ID());
+  float x = playerPosition.x + 100;
+  float y = playerPosition.y + 100;
+  float z = playerPosition.z;
+
+  int* pBlip = nullptr;
+  ADD_BLIP_FOR_COORD(x, y, z, &pBlip); // sponge: crashes...
+}
+
 vec3 getPlayerPositionFromId(int playerId) {
   float x, y, z;
   int* playerChar = nullptr;
