@@ -12,10 +12,10 @@ public:
   std::string street2 = "street2";
   std::string zone = "ZONE";
 
-  int x = 1000;;
-  int y = 200;
-  int width = 400;
-  int height = 600;
+  int x = 1600;
+  int y = 20;
+  int width = 300;
+  int height = 300;
   int text_x = 0;
   int text_y = 0;
 
@@ -23,9 +23,9 @@ public:
   void display(IDirect3DDevice9* pDevice);
   void displayText();
   void drawBackground();
+  void drawNewLine();
   void drawText(std::string text);
   void loadFont();
-  void textNextLine();
 
 private:
   LPD3DXFONT font;
