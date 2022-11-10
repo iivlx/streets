@@ -3,6 +3,7 @@
 #include <d3d9.h>
 #include <d3dx9.h>
 
+#include "directx.h"
 #include "interface.h"
 
 LPD3DXFONT font;

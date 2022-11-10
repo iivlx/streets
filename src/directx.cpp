@@ -9,11 +9,9 @@
 #include "interface.h"
 #include "mod.h"
 
-endScene pEndScene;
-
 extern Interface* iface;
 
-void hookEndScene() {
+void DX::hookEndScene() {
 
   if (DEBUG) OutputDebugString("[+] Hooking DX9");
 
@@ -38,11 +36,11 @@ void hookEndScene() {
   if (DEBUG) OutputDebugString("[+] Create Device Success");
 
   DWORD* vTable = *reinterpret_cast<DWORD**>(pDevice);
-  pEndScene = (endScene)(DWORD)vTable[42];
+  DX::pEndScene = (endScene)(DWORD)vTable[42];
 
   DetourTransactionBegin();
   DetourUpdateThread(GetCurrentThread());
-  DetourAttach(&(PVOID&)pEndScene, (PBYTE)hookedEndScene);
+  DetourAttach(&(PVOID&)DX::pEndScene, (PBYTE)DX::hookedEndScene);
   DetourTransactionCommit();
 
   if (DEBUG) OutputDebugString("[+] Attached Detour");
@@ -51,7 +49,7 @@ void hookEndScene() {
   pD3D->Release();
 }
 
-HRESULT __stdcall hookedEndScene(IDirect3DDevice9* pDevice) {
+HRESULT __stdcall DX::hookedEndScene(IDirect3DDevice9* pDevice) {
   iface->display(pDevice);
-  return pEndScene(pDevice);
+  return DX::pEndScene(pDevice);
 }

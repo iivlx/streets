@@ -53,7 +53,7 @@ bool handleKeyPresses() {
 
 DWORD WINAPI mod(HMODULE hModule) {
   registerFunctions((uintptr_t)GetModuleHandleW(L"GTAIV.exe"));
-  hookEndScene();
+  DX::hookEndScene();
   
   bool mod_running = true;
 
