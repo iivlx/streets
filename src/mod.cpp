@@ -21,20 +21,6 @@ vec3 getPlayerPositionFromId(int playerId) {
   return { x, y, z };
 }
 
-void updateStreetNames() {
-  int street1, street2;
- 
-  vec3 playerPosition = getPlayerPositionFromId(GET_PLAYER_ID());
-  
-  FIND_STREET_NAME_AT_POSITION(playerPosition.x, playerPosition.y, playerPosition.z, &street1, &street2);
-  iface->street1 = GET_STRING_FROM_HASH_KEY(street1);
-  iface->street2 = GET_STRING_FROM_HASH_KEY(street2);
-
-  GIVE_PLAYER_HELMET(CONVERT_INT_TO_PLAYERINDEX(GET_PLAYER_ID()));
-
-  return;
-}
-
 bool handleKeyPresses() {
   if (GetAsyncKeyState(VK_END) & 1) {
     if (DEBUG) OutputDebugString(_T("Received END key"));
@@ -56,11 +42,7 @@ bool handleKeyPresses() {
 }
 
 DWORD WINAPI mod(HMODULE hModule) {
-  BOOL createConsole;
-  FILE* f = nullptr;
-  uintptr_t moduleBase = (uintptr_t)GetModuleHandleW(L"GTAIV.exe");
-  registerFunctions(moduleBase);
-
+  registerFunctions((uintptr_t)GetModuleHandleW(L"GTAIV.exe"));
   hookEndScene();
   
   bool mod_running = true;
@@ -72,4 +54,18 @@ DWORD WINAPI mod(HMODULE hModule) {
 
   if (DEBUG) OutputDebugString(_T("[-] Unloaded ASI"));
   FreeLibraryAndExitThread(hModule, 0);
+}
+
+void updateStreetNames() {
+  int street1, street2;
+ 
+  vec3 playerPosition = getPlayerPositionFromId(GET_PLAYER_ID());
+  
+  FIND_STREET_NAME_AT_POSITION(playerPosition.x, playerPosition.y, playerPosition.z, &street1, &street2);
+  iface->street1 = GET_STRING_FROM_HASH_KEY(street1);
+  iface->street2 = GET_STRING_FROM_HASH_KEY(street2);
+
+  GIVE_PLAYER_HELMET(CONVERT_INT_TO_PLAYERINDEX(GET_PLAYER_ID()));
+
+  return;
 }
